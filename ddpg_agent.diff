@@ -1,0 +1,76 @@
+$ diff ddpg_agent.py deep-reinforcement-learning/ddpg-bipedal/ddpg_agent.py
+13c13
+< BUFFER_SIZE = int(1e5)  # replay buffer size
+---
+> BUFFER_SIZE = int(1e6)  # replay buffer size
+16c16
+< LR_CRITIC = 1e-3        # learning rate of the critic
+---
+> LR_CRITIC = 3e-4        # learning rate of the critic
+18c18
+< WEIGHT_DECAY = 0        # L2 weight decay
+---
+> WEIGHT_DECAY = 0.0001   # L2 weight decay
+22c22
+< class Agents():
+---
+> class Agent():
+25c25
+<     def __init__(self, state_size, action_size, num_agents, random_seed):
+---
+>     def __init__(self, state_size, action_size, random_seed):
+32d31
+<             num_agents (int): number of agents
+37d35
+<         self.num_agents = num_agents
+51c49
+<         self.noise = OUNoise((num_agents, action_size), random_seed)
+---
+>         self.noise = OUNoise(action_size, random_seed)
+59,60c57
+<         for i in range(self.num_agents):
+<             self.memory.add(state[i,:], action[i,:], reward[i], next_state[i,:], done[i])
+---
+>         self.memory.add(state, action, reward, next_state, done)
+67c64
+<     def act(self, states, add_noise=True):
+---
+>     def act(self, state, add_noise=True):
+69,70c66
+<         states = torch.from_numpy(states).float().to(device)
+<         actions = np.zeros((self.num_agents, self.action_size))
+---
+>         state = torch.from_numpy(state).float().to(device)
+73,75c69
+<             for agent_num, state in enumerate(states):
+<                 action = self.actor_local(state).cpu().data.numpy()
+<                 actions[agent_num, :] = action
+---
+>             action = self.actor_local(state).cpu().data.numpy()
+78,79c72,73
+<             actions += self.noise.sample()
+<         return np.clip(actions, -1, 1)
+---
+>             action += self.noise.sample()
+>         return np.clip(action, -1, 1)
+137c131
+<             
+---
+> 
+141c135
+<     def __init__(self, size, seed, mu=0.0, theta=0.15, sigma=0.2):
+---
+>     def __init__(self, size, seed, mu=0., theta=0.15, sigma=0.2):
+147d140
+<         self.size = size
+157c150
+<         dx = self.theta * (self.mu - x) + self.sigma * np.random.standard_normal(self.size)
+---
+>         dx = self.theta * (self.mu - x) + self.sigma * np.array([random.random() for i in range(len(x))])
+160d152
+<     
+197c189
+<         return len(self.memory)
+---
+>         return len(self.memory)
+\ No newline at end of file
