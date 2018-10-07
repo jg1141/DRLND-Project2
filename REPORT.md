@@ -82,7 +82,7 @@ The **Critic** is a value function, measuring the quality of the actions via 3 f
 
 ![Plot of Rewards](Plot%20of%20Rewards.png)
 
-
+As illustrated above, the environment was solved in 125 episodes.
 
 ## Ideas for Future Work
 
