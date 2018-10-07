@@ -70,11 +70,11 @@ TAU = 1e-3              # for soft update of target parameters
 WEIGHT_DECAY = 0        # L2 weight decay
 ```
 
-These hyperparameters are altered slightly from the Udacity example. The BATCH_SIZE and BUFFER_SIZE are parameters for the **ReplayBuffer** class, an "memory" randomly sampled at each step to obtain _experiences_ passed into the **learn** method with a discount of GAMMA. WEIGHT_DECAY, LR_ACTOR and LR_CRITIC are parameters to the **Adam** optimizer. Finally, TAU is a parameter for a _soft update_ of the target and local models.
+These hyperparameters are altered slightly from the Udacity example. The BATCH_SIZE and BUFFER_SIZE are parameters for the **ReplayBuffer** class, a "memory" of 100 000 actions which is randomly sampled at each step to obtain _experiences_ passed into the **learn** method with a discount of GAMMA. WEIGHT_DECAY, LR_ACTOR and LR_CRITIC are parameters to the **Adam** optimizer. Finally, TAU is a parameter for a _soft update_ of the target and local models.
 
 #### Model Architecture
 
-The **Actor** is a mapping of state to action values via 3 fully connected **Linear** layers with **relu** activation. The final output layer yields 4 outputs with **tanh** activation. 
+The **Actor** is a mapping of state to action values via 3 fully connected **Linear** layers with **relu** activation. The final output layer yields 4 values with **tanh** activation. 
 
 The **Critic** is a value function, measuring the quality of the actions via 3 fully connected **Linear** layers with **relu** activation with the third layer yielding the single output value. 
 
@@ -88,7 +88,7 @@ The **Critic** is a value function, measuring the quality of the actions via 3 f
 
 Given more compute resources, this project would benefit from a exploration of the sensitivity of the results to changing the hyperparameters and the architecture (particularly the *depth*) of the Actor and Critic models.
 
-These are exciting times for Reinforcement Learning (RL). New and better algorithms are being proposed to address the issues of **stability** (seen in the [report by Simon Chauvin](https://drlnd.slack.com/archives/CBMG84E2Y/p1538723040000100) on different seeds, image below) and **explainability**.  The paper [Combined Reinforcement Learning via Abstract Representations](https://arxiv.org/pdf/1809.04506.pdf) suggested combining model-free and model-based approaches via a shared low-dimensional encoding of the environment as shown in Figure 1 below:
+These are exciting times for Reinforcement Learning (RL). New and better algorithms are being proposed to address issues of **stability** (seen in the [report by Simon Chauvin](https://drlnd.slack.com/archives/CBMG84E2Y/p1538723040000100) on different seeds, image below) and **explainability**.  The paper [Combined Reinforcement Learning via Abstract Representations](https://arxiv.org/pdf/1809.04506.pdf) suggested combining model-free and model-based approaches via a shared low-dimensional encoding of the environment as shown in Figure 1 below:
 
 ![CRAR Figure 1](CRAR.png)
 
@@ -98,7 +98,7 @@ This "Combined Reinforcement via Abstract Representations (CRAR)" architecture h
 
 The next step for improving agent performance in this project would be to re-implement it using CRAR.
 
-Then, there is still lots more to study at [http://bit.ly/drlndlinks](http://bit.ly/drlndlinks)!
+Then, there is lots more to study at [http://bit.ly/drlndlinks](http://bit.ly/drlndlinks)!
 
 
 
